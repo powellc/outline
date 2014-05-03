@@ -12,3 +12,6 @@ clean:
 
 run:
 	venv/bin/python manage.py runserver_plus 0.0.0.0:45000
+
+rename:
+	find . -maxdepth 1 -type f -print0 | xargs -0 sed -i 's/outline/$(name)/g'
