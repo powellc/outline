@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>{{object}}</h3>
+
+<h5>Projects</h5>
+<ul>
+  {% for project in object.clientproject_set.all %}
+  <li><a href="{{project.get_absolute_url}}">{{project}}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

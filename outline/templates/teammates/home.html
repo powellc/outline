@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{hours.next_week}}
+{% if hours %}
+<h3>Your plan for {{hours.start_date}}</h3>
+<table>
+    <tr>
+        <th>Project</th>
+        <th>Goal</th>
+        <th>Actual</th>
+    </tr>
+{% for hours in hours.projecthours_set.all %}
+    <tr>
+        <td><a href="#">{{hours.project}}</a></td>
+        <td>{{hours.planned_hours}}</td>
+        <td>{{hours.actual_hours}}</td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+{% if team_hours %}
+<h3>Your team's hours for this week</h3>
+{% for member, hours in team_hours.items %}
+<h5>{{member}}</h5>
+<table>
+    <tr>
+        <th>Project</th>
+        <th>Goal</th>
+        <th>Actual</th>
+    </tr>
+{% for hours in hours.projecthours_set.all %}
+    <tr>
+        <td><a href="#">{{hours.project}}</a></td>
+        <td>{{hours.planned_hours}}</td>
+        <td>{{hours.actual_hours}}</td>
+    </tr>
+{% endfor %}
+</table>
+{% endfor %}
+{% endif %}
+{% endif %}
+
+{% endblock %}

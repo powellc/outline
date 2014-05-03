@@ -1,0 +1,113 @@
+{% load static %}
+{% load foundation_tags %}
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block meta %}{% endblock meta %}
+    {% block base_title %}
+    <title>{% block title %}Foundation 5.0.3{% endblock title %}</title>
+    {% endblock base_title %}
+
+    {# Base Foundation CSS #}
+    {% block foundation_css %}
+    {% foundation_css "normalize" %}
+    {% foundation_css "foundation.min" %}
+    {% endblock foundation_css %}  
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+    
+    {# Custom CSS #}
+    {% block css %}{% endblock css %}
+
+    {# Override if you need another version of modernizr #}
+    {% block foundation_modernizer %}
+    {% foundation_vendor "modernizr" %}
+    {% endblock foundation_modernizer %}
+
+    {# Custom head JS #}
+    {% block head_js %}{% endblock head_js %}
+</head>
+<body {% block body_attr %}{% endblock body_attr %}>
+    {% block base_header %}
+    <nav class="top-bar" data-topbar>
+      <ul class="title-area">
+        <!-- Title Area -->
+        <li class="name">
+          <h1>
+            <a href="#">
+             RePlan 
+            </a>
+          </h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
+      </ul>
+   
+      <section class="top-bar-section">
+        <!-- Right Nav Section -->
+        <ul class="right">
+        {% if request.user.is_authenticated %}
+          <li class="divider"></li>
+          <li class="">
+          <a href="{% url 'teammate-home' %}"><i class="fa fa-home"></i>&nbsp;Home</a>
+          </li>
+          <li class="divider"></li>
+          <li class="has-dropdown"><a href="#">Manage</a>
+            <ul class="dropdown">
+                <li><a href="{% url 'week-create' %}">Add week</a></li>
+                <li><a href="{% url 'week-list' %}">View plans</a></li>
+              <li class="divider"></li>
+              <li><a href="{% url 'account_logout' %}"><i class="fa fa-logout"></i>&nbsp;Logout</a></li>
+            </ul>
+          </li>
+          <li class="divider"></li>
+          <li class="has-dropdown">
+            <a href="#"><i class="fa fa-gears"></i>&nbsp;{{request.user.name}}</a>
+            <ul class="dropdown">
+              <li><a href="">Edit profile</a></li>
+              <li><a href="">My week</a></li>
+              <li class="divider"></li>
+              <li><a href="{% url 'account_logout' %}"><i class="fa fa-logout"></i>&nbsp;Logout</a></li>
+            </ul>
+          </li>
+        {% else %}
+        <li class=""><a href="{% url 'account_signup' %}">Sign up</a></li>
+        <li class=""><a href="{% url 'account_login' %}">Log in</a></li>
+        {% endif %}
+        </ul>
+      </section>
+    </nav>
+
+    {% endblock %}
+
+    {# Main content goes here #}
+    {% block base_body %}
+    <div class="row">
+      <div class="large-12 columns">
+      {% block content %}{% endblock %}
+      </div>
+    </div>
+    {% endblock %}
+
+    {# Override if you need another version of jQuery #}
+    {% block foundation_jquery %}
+    {% foundation_vendor "jquery" %}
+    {% endblock foundation_jquery %}
+
+    {# Foundation JS #}
+    {% block foundation_js %}
+    {% foundation_js %}
+    {% endblock foundation_js %}
+
+    {# Custom JS #}
+    {% block body_js %}{% endblock body_js %}
+
+    {# Init Foundation #}
+    {% block foundation_js_init %}
+    <script>
+        $(document).foundation();
+    </script>
+    {% endblock foundation_js_init %}
+</body>
+</html>

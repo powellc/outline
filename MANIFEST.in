@@ -1,0 +1,4 @@
+include README.md
+recursive-include outline/static *
+recursive-include outline/templates *
+recursive-include outline/apps *

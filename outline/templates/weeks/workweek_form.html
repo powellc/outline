@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>{{object}}</h3>
+<form method="post">{% csrf_token %}
+{{form.as_p}}
+{{hours_formset.as_p}}
+<input type="Submit" value="Save" class="button">
+</form>
+{% endblock %}
