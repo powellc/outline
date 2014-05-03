@@ -135,6 +135,10 @@ class Common(Configuration):
 
     STATIC_ROOT = os.path.join(BASE_DIR, 'public/static')
 
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, "outline/static"),
+    )
+
     #DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
     AWS_ACCESS_KEY_ID = values.Value()
