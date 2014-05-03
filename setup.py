@@ -6,7 +6,6 @@ version = __import__('outline').__version__
 
 install_requires = [
     'setuptools',
-    'django>=1.6.2',
     'south==0.8.2',
     'Django==1.6.4',
     'django-configurations==0.8',
