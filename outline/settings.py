@@ -19,6 +19,9 @@ class Common(Configuration):
         ('Admin', 'info@example.com'),
     )
 
+    # You'll likely want to add your own auth model.
+    #AUTH_USER_MODEL = ''
+
     MANAGERS = ADMINS
 
     # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -81,7 +84,6 @@ class Common(Configuration):
         "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     )
 
-    AUTH_USER_MODEL = 'teammates.Teammate'
 
     AUTHENTICATION_BACKENDS = (
         "django.contrib.auth.backends.ModelBackend",
