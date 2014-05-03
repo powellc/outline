@@ -1,6 +1,9 @@
 Django Outline
 ==============
 
+[![Build
+Status](https://travis-ci.org/powellc/outline.svg?branch=master)](https://travis-ci.org/powellc/outline)
+
 In the spirit of [playdoh](https://github.com/mozilla/playdoh), this project
 aims to provide a base Django app full of best-practices and pre-installed
 applications.
