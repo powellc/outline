@@ -20,7 +20,7 @@ class Common(Configuration):
     )
 
     # You'll likely want to add your own auth model.
-    #AUTH_USER_MODEL = ''
+    AUTH_USER_MODEL = 'custom_user.EmailUser'
 
     MANAGERS = ADMINS
 
@@ -53,6 +53,7 @@ class Common(Configuration):
         "django.contrib.sitemaps",
         "django.contrib.staticfiles",
 
+        'custom_user',
         'allauth',
         'allauth.account',
         'allauth.socialaccount',
