@@ -3,7 +3,7 @@ import os
 import sys
 
 def main():
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "replan.settings")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "outline.settings")
     os.environ.setdefault("DJANGO_CONFIGURATION", "Dev")
 
     from configurations.management import execute_from_command_line

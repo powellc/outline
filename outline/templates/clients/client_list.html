@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-
-{% block content %}
-<h2>Clients</h2>
-{% for client in object_list %}
-<p><a href="{{client.get_absolute_url}}">{{client}}</a></p>
-{% endfor %}
-{% endblock %}
