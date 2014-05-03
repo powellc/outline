@@ -23,6 +23,12 @@ to get started is:
 
 make name="<myproject_name>" rename
 
+That should do all the important replacements. The final step will be removing
+the .git folder and initializing your own repository and lastly tweaking the
+setup.py file, else you're likely to give me credit for your project and to 
+provide a pretty terribly confusing description to PyPI if your project ever
+lands there.
+
 Easy bootstrapping!
 -------------------
 
