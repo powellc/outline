@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 import sys
 
-version = __import__('findhistory').__version__
+version = __import__('outline').__version__
 
 install_requires = [
     'setuptools',
@@ -41,12 +41,12 @@ class Tox(TestCommand):
         sys.exit(errno)
 
 setup(
-    name="findhistory",
+    name="outline",
     version=version,
-    url='http://findhistory.com',
+    url='http://github.com/powellc/outline',
     license='BSD',
     platforms=['OS Independent'],
-    description="A resource planning application.",
+    description="An outline for django applications.",
     author="Colin Powell",
     author_email='colin.powell@gmail.com',
     packages=find_packages(),
@@ -66,12 +66,12 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
     package_dir={
-        'findhistory': 'findhistory',
-        'findhistory/templates': 'findhistory/templates',
+        'outline': 'outline',
+        'outline/templates': 'outline/templates',
     },
     entry_points={
         'console_scripts': [
-            'findhistory = findhistory.manage_findhistory:main',
+            'outline = outline.manage_outline:main',
         ],
     },
 )
