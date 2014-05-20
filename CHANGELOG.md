@@ -5,6 +5,7 @@ v1.0.2
 ------
 
   * Adding a placeholder file so we create a static directory
+  * Fixing makefile so renaming works on Macs
 
 v1.0.1
 ------
