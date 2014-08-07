@@ -1,5 +1,5 @@
 """
-WSGI config for replan project.
+WSGI config for outline project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -8,7 +8,7 @@ https://docs.djangoproject.com/en/1.6/howto/deployment/wsgi/
 """
 
 import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "replan.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "outline.settings")
 os.environ.setdefault('DJANGO_CONFIGURATION', 'Dev')
 
 from configurations.wsgi import get_wsgi_application
