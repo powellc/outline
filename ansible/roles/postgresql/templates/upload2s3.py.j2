@@ -1,0 +1,27 @@
+#!/usr/bin/python
+import sys
+import os.path
+from boto.s3.connection import S3Connection
+import boto
+
+
+if __name__ == "__main__":
+    print "Connecting to S3 ... "
+    accessKey = '{{ s3_access_key }}' 
+    secretKey = '{{ s3_secret_key }}'
+    bucketName = "fiveq-db-backups"
+    s3conn = S3Connection(accessKey,secretKey)
+    bucket = s3conn.get_bucket(bucketName)
+
+    if len(sys.argv) < 2:
+        print >> sys.stderr, "Usage: uploadtoS3.py <file1> <file2> ... <fileN>"
+        sys.exit(2)
+
+    #prefix = sys.argv[1] + "/" # first argument is directory name in bucket, can be "" if undesired
+    for arg in sys.argv[1:]: 
+        in_file = os.path.basename(arg)
+        filename = in_file.split('/')[-1]
+
+        print "Uploading %s to bucket %s" % (arg ,bucketName)
+        key = bucket.new_key(filename)
+        key.set_contents_from_filename(arg)

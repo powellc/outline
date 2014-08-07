@@ -1,0 +1,6 @@
+---
+env:
+  DJANGO_CONFIGURATION: "{{mode}}"
+  DATABASE_URL: 'postgres://{{deployment_name}}:{{dbpass}}@localhost/{{deployment_name}}_{{mode}}'
+  DJANGO_SETTINGS_MODULE: "{{deployment_name}}.settings"
+  DJANGO_SECRET_KEY: "{{secret_key}}"

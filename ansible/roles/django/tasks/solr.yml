@@ -1,0 +1,13 @@
+---
+- name: Build the SOLR index file
+  shell: ${project_root}/venv/bin/python ${project_root}/code/manage.py build_solr_schema --settings={{settings_path}} --pythonpath=${project_root}/code/ | cat > {{project_root}}/code/schema.xml
+
+- name: Install the generated schema file
+  shell: mv {{project_root}}/code/schema.xml /usr/share/solr/conf/schema.xml
+
+- name: Restart SOLR
+  service: name=tomcat6 state=restarted
+  sudo_user: root
+
+- name: Reuild the SOLR index
+  shell: ${project_root}/venv/bin/python ${project_root}/code/manage.py rebuild_index --settings={{settings_path}} --pythonpath=${project_root}/code/ 

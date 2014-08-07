@@ -1,0 +1,5 @@
+- name: Remove the git cloned code folder.
+  file: path="{{project_root}}/{{repo_name}}" state=absent
+
+- name: Mount the local code folder.
+  file: src=/vagrant/ path="{{project_root}}/{{repo_name}}" owner={{deployment_name}} group={{deployment_name}} state=link

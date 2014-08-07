@@ -1,0 +1,75 @@
+---
+- name: Install PostgreSQL with locale set
+  shell: LANG={{locale}} LC_COLLATE={{locale}} LC_CTYPE={{locale}} LC_MESSAGES={{locale}} LC_MONETARY={{locale}} LC_NUMERIC={{locale}} LC_TIME={{locale}} LC_ALL={{locale}}  apt-get install -y postgresql-9.3
+
+- name: Install PostgreSQL Dev Tools
+  apt: pkg={{item}} state=installed
+  with_items:
+    - postgresql-server-dev-9.3
+    - postgresql-contrib-9.3
+    - python-psycopg2
+
+- name: Install PostgreSQL GIS tools
+  apt: pkg={{item}} state=installed
+  with_items:
+    - postgresql-9.1-postgis
+    - postgis
+    - libgdal1-dev
+    - libgeos-dev
+    - libgeos-c1 
+    - libxml2 
+    - libxml2-dev
+  when: postgis
+
+- name: Change access permissions for PostgreSQL
+  copy: src=pg_hba.conf dest=/etc/postgresql/9.3/main/pg_hba.conf
+  sudo_user: postgres
+  register: pg_file
+
+- name: Reload PostgreSQL if it changed
+  service: name=postgresql state=reloaded enabled=yes
+  when: pg_file.changed
+
+- name: Create the database.
+  postgresql_db: db={{deployment_name}}_{{mode}} owner={{deployment_name}}
+  sudo_user: postgres
+  when: not postgis
+
+- name: Create database user and give them access.
+  postgresql_user: db={{deployment_name}}_{{mode}} user={{deployment_name}} password={{dbpass}} state=present priv=ALL role_attr_flags=SUPERUSER
+  sudo_user: postgres
+
+
+# The following only runs if we set the postgis flag in the playbook
+
+- name: Ensure postgis_template database exists
+  action: postgresql_db db=postgis_template state=present
+  sudo_user: postgres
+  register: createdb_postgis_template
+  when: postgis == True
+ 
+- name: Make postgis_template a template
+  action: command psql -d postgis_template -c "UPDATE pg_database SET datistemplate=true WHERE datname='postgis_template';"
+  sudo_user: postgres
+  when: postgis and createdb_postgis_template.changed
+ 
+- name: Run the PostGIS SQL scripts
+  action: command psql -d postgis_template -f $item
+  sudo_user: postgres
+  with_items:
+    - /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
+    - /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
+    - /usr/share/postgresql/9.1/contrib/postgis_comments.sql
+  when: postgis and createdb_postgis_template.changed
+
+- name: Create the PostGIS database.
+  postgresql_db: db={{deployment_name}}_{{mode}} template=postgis_template
+  sudo_user: postgres
+  when: postgis
+
+- name: Copy db_dump script
+  copy: src=db_dump.sh dest=/var/lib/postgresql/db_dump.sh
+  sudo_user: postgres
+  when: mode != 'local'
+  tags:
+    - db-backup

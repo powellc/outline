@@ -1,0 +1,50 @@
+---
+
+- name: Pull sources from the repository.
+  git: repo="{{project_repo}}" dest="/home/{{deployment_name}}/{{ mode }}/" version="{{branch}}" accept_hostkey=yes
+  sudo_user: "{{deployment_name}}"
+  register: git
+  when: mode != 'local'
+  tags:
+    - deploy
+    - clone
+
+- name: Upgrade the Virtualenv.
+  pip: requirements="/home/{{deployment_name}}/{{ mode }}/requirements.txt" virtualenv=/home/{{deployment_name}}/{{ mode }}/venv/
+  sudo_user: "{{deployment_name}}"
+  register: venv
+  tags:
+    - deploy
+    - reqs
+
+- name: Sync Django database.
+  django_manage: command=syncdb app_path=/home/{{deployment_name}}/{{mode}}/ settings={{deployment_name}}.settings  virtualenv=/home/{{deployment_name}}/{{ mode }}/venv/
+  sudo_user: "{{deployment_name}}"
+  environment: env
+  when: mode != 'local'
+  tags:
+    - deploy
+    - syncdb
+
+- name: Migrate Django database.
+  django_manage: command=migrate skip=true app_path=/home/{{ deployment_name }}/{{mode}}/ settings={{ deployment_name }}.settings  virtualenv=/home/{{deployment_name}}/{{ mode }}/venv/
+  sudo_user: "{{deployment_name}}"
+  environment: env
+  when: mode != 'local'
+  tags:
+    - deploy
+    - migrate
+
+- name: Generate Django media.
+  django_manage: command=collectstatic app_path=/home/{{ deployment_name }}/{{mode}} settings={{ deployment_name}}.settings virtualenv=/home/{{deployment_name}}/{{mode}}/venv/
+  sudo_user: "{{deployment_name}}"
+  environment: env
+  tags:
+    - deploy
+    - collectstatic
+
+- name: Start the service
+  service: name={{deployment_name}}_{{mode}} state=restarted
+  tags:
+    - deploy
+    - restart

@@ -1,0 +1,17 @@
+---
+  - name: Install celery supervisor configuration file.
+    template: src=celeryd.conf.j2 dest=/etc/supervisor/conf.d/celeryd_${deployment_name}.conf
+    register: supervisor_conf
+    tags:
+      - celery
+
+  - name: Install celerybeat supervisor configuration file.
+    template: src=celerybeat.conf.j2 dest=/etc/supervisor/conf.d/celerybeat_${deployment_name}.conf
+    register: supervisor_conf
+    tags:
+      - celery
+
+  - name: restart supervisor
+    service: name=supervisor state=restarted
+    sudo_user: root
+    when: supervisor_conf.changed

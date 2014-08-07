@@ -1,0 +1,5 @@
+[production]
+www.example.com
+
+[staging]
+staging.example.com

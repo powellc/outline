@@ -1,0 +1,3 @@
+source venv/bin/activate
+export DJANGO_SETTINGS_MODULE={{ deployment_name }}.settings
+export PYTHONPATH=/home/{{deployment_name}}/{{mode}}/

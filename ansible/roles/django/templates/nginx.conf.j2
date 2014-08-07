@@ -1,0 +1,95 @@
+upstream gunicorn_process {
+    server 127.0.0.1:{{port_number}};
+}
+
+server {
+        listen 80;
+
+        server_name  {{server}};
+
+        access_log  /home/{{deployment_name}}/logs/access.{{mode}}.log;
+        error_log /home/{{deployment_name}}/logs/error.{{mode}}.log;
+
+        keepalive_timeout 3;
+
+        root /home/{{deployment_name}}/{{mode}}/public;                                                                               
+
+        location /media {
+             alias /home/{{deployment_name}}/{{mode}}/public/media;
+	     access_log off;
+             expires 31d;
+        }
+
+        location /static {
+             alias /home/{{deployment_name}}/{{mode}}/public/static;
+      	     access_log off;
+             expires 31d;
+        }
+
+        location / {
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host $http_host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Url-Scheme $scheme;
+                proxy_redirect off;
+
+                proxy_pass http://gunicorn_process;
+                break;
+        }
+
+        error_page 500 502 503 504 /500.html;
+        location = /500.html {
+                root /home/{{deployment_name}}/{{mode}}/templates;
+        }
+}
+
+{% if mode == 'production' %}
+server {
+        listen  443 ssl;
+
+        server_name  {{server}};
+
+        ssl_certificate  /etc/nginx/ssl/server.crt;
+        ssl_certificate_key /etc/nginx/ssl/server.key;
+
+        access_log  /home/{{deployment_name}}/logs/access.{{mode}}.log;
+        error_log /home/{{deployment_name}}/logs/error.{{mode}}.log;
+
+        keepalive_timeout 3;
+
+        root {{project_root}}/code{{code_root}}public;                                                                               
+
+        location /media {
+             alias /home/{{deployment_name}}/{{code_root}}/public/media;
+	     access_log off;
+             expires 31d;
+        }
+
+        location /static {
+             alias /home/{{deployment_name}}/{{code_root}}/public/static;
+      	     access_log off;
+             expires 31d;
+        }
+
+        location / {
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header Host $http_host;
+                proxy_set_header X-Real-IP $remote_addr;
+                proxy_set_header X-Url-Scheme $scheme;
+                proxy_redirect off;
+
+                proxy_pass http://gunicorn_process;
+                break;
+        }
+
+        error_page 500 502 503 504 /500.html;
+        location = /500.html {
+                root /home/{{deployment_name}}/{{code_root}}/templates;
+        }
+}
+
+server {
+    server_name {{domainname}};
+    rewrite ^(.*) http://{{server}}$1 permanent;
+}
+{% endif %}

@@ -1,0 +1,6 @@
+- name: Copy the production database (Vagrant)
+  shell: psql -d {{dbname}} -f {{project_root}}/{{repo_name}}/{{dbdump_file}}
+  sudo_user: postgres
+
+- name: Restart Supervisor
+  supervisorctl: name={{deployment_name}} state=restarted 

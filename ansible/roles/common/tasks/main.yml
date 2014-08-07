@@ -1,0 +1,59 @@
+---
+  - name: Allow ssh in firewall
+    action: shell ufw allow ssh
+
+  - name: Allow http in firewall
+    action: shell ufw allow http
+
+  - name: Allow https in firewall
+    action: shell ufw allow https
+
+  - name: Enable UFW
+    action: shell echo 'y' | ufw enable
+
+  - name: Set locale
+    command: /usr/sbin/update-locale LANG={{locale}} LC_ALL={{locale}}
+
+  - name: Set localtime
+    command: /bin/cp /usr/share/zoneinfo/{{timezone}} /etc/localtime
+
+  - name: Set timezone
+    template: src=timezone.conf dest=/etc/timezone
+    register: tzdata
+
+  - name: Update timezone
+    command: dpkg-reconfigure -f noninteractive tzdata
+    when: tzdata.changed
+
+  - name: Update package cache and install system packages.
+    apt: pkg={{item}} state=installed update-cache=yes
+    with_items: 
+      - vim
+      - git
+      - mercurial
+      - subversion
+      - fail2ban
+      - memcached
+      - libmemcached-dev
+      - build-essential
+      - postfix
+      - python-pip
+      - python-virtualenv
+      - python-pyinotify
+      - build-essential
+      - libxml2-dev
+      - libxslt1-dev
+      - libjpeg-dev
+      - python-dev
+
+  - name: Create ssl group.
+    group: name=ssl state=present
+
+  - name: Create user.
+    user: home=/home/{{deployment_name}} name={{deployment_name}} shell=/bin/bash state=present groups=ssl
+
+  - name: Create the project logs directory.
+    file: state=directory path=/home/{{deployment_name}}/logs/
+
+  - name: Copy bash profile to user.
+    copy: src=bash_profile  dest=/home/{{deployment_name}}/.bash_profile

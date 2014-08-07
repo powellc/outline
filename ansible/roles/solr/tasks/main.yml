@@ -1,0 +1,6 @@
+---
+  - name: Install Solr
+    action: apt pkg=solr-tomcat state=installed
+
+  - name: Allow solr in firewall
+    action: shell ufw allow 8080

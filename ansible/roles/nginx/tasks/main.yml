@@ -1,0 +1,18 @@
+---
+- name: Install NGINX
+  apt: pkg=nginx state=installed update-cache=yes
+
+- name: Create SSL folders for NGINX
+  file: group=ssl owner=root mode=775 state=directory path=/etc/nginx/ssl/
+
+- name: Remove default NGINX site.
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  register: nginx_default_off
+
+- name: Install NGINX site config file
+  template: src=nginx.global.conf.j2 dest=/etc/nginx/nginx.conf
+  register: nginx_site
+
+- name: Restart NGINX
+  service: name=nginx state=restarted
+  when: nginx_site.changed

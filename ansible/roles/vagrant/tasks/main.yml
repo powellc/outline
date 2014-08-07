@@ -1,0 +1,24 @@
+- name: Create the ubuntu user
+  action: user name=ubuntu state=present groups=admin
+
+- name: Make the ubuntu user a sudoer
+  action: lineinfile dest=/etc/sudoers regexp="^ubuntu" line="ubuntu ALL=(ALL) ALL"
+
+- name: Make /home/ubuntu/.ssh/
+  action: file path=/home/ubuntu/.ssh/ state=directory
+
+- name: Copy ansible key from vagrant user to ubuntu user
+  action: shell cp /home/vagrant/.ssh/authorized_keys /home/ubuntu/.ssh/authorized_keys
+
+- name: Make /root/.ssh/
+  action: file path=/root/.ssh/ state=directory
+
+- name: Upload SSH key.
+  copy: src=key dest=/root/.ssh/id_rsa mode=0600
+
+- name: Upload SSH known hosts.
+  copy: src=known_hosts dest=/root/.ssh/known_hosts mode=0600
+
+- name: Fix permission of the same
+  action: file path=/home/ubuntu/.ssh/ owner=ubuntu group=ubuntu mode=0600 state=directory
+  action: file path=/home/ubuntu/.ssh/authorized_keys owner=ubuntu group=ubuntu mode=0600 state=file

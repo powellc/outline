@@ -1,0 +1,27 @@
+---
+  - name: Create the SSH directory.
+    sudo_user: "{{ deployment_name }}"
+    file: state=directory path=/home/{{deployment_name}}/.ssh/
+
+  - name: Upload SSH known hosts.
+    sudo_user: "{{ deployment_name }}"
+    copy: src=known_hosts dest="/home/{{ deployment_name }}/.ssh/known_hosts" mode=0600
+
+  - name: Upload SSH key.
+    sudo_user: "{{ deployment_name }}"
+    copy: src=key dest="/home/{{deployment_name}}/.ssh/id_rsa" mode=0600
+
+  - name: Install upstart conf file.
+    template: src=upstart.conf.j2 dest=/etc/init/{{deployment_name}}_{{mode}}.conf
+
+  - name: Install NGINX site conf file.
+    template: src=nginx.conf.j2 dest=/etc/nginx/sites-enabled/{{deployment_name}}
+    register: nginx_sites
+
+  - name: Install Gunicorn conf file.
+    template: src=gunicorn.conf.j2 dest=/etc/gunicorn_{{deployment_name}}_{{mode}}.py
+  
+  - name: Restart NGINX
+    service: name=nginx state=restarted
+    sudo_user: root
+    when: nginx_sites.changed

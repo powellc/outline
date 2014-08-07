@@ -1,0 +1,10 @@
+[program:celerybeat_{{ deployment_name }}]
+command=/var/www/vhosts/{{ deployment_name }}/venv/bin/python /var/www/vhosts/{{ deployment_name }}/code/manage.py celerybeat --loglevel=INFO
+directory=/var/www/vhosts/{{ deployment_name }}/code
+user={{ deployment_name }}
+numprocs=1
+stdout_logfile=/var/www/vhosts/{{ deployment_name }}/logs/celerybeat.log
+stderr_logfile=/var/www/vhosts/{{ deployment_name }}/logs/celerybeat.log
+autostart=true
+autorestart=true
+startsecs=10
