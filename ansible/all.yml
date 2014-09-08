@@ -6,6 +6,7 @@
   roles:
     - role: common
     - role: postgresql
+    - role: nodejs
     - role: nginx
     - role: django
 

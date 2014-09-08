@@ -10,4 +10,5 @@ project_repo: git@github.com:powellc/outline.git
 branch: master
 dbpassword: jzxovijlsakdfj0ojookfjl32k3jrl
 postgis: False
+bower: False
 secret_key: ALKJSDFLKXJCOVIJSELKJFEWLKJSLDFKJLEKJ-KLEJWLFEKJ

@@ -4,13 +4,17 @@
   git: repo="{{project_repo}}" dest="/home/{{deployment_name}}/{{ mode }}/" version="{{branch}}" accept_hostkey=yes
   sudo_user: "{{deployment_name}}"
   register: git
-  when: mode != 'local'
+  when: mode != 'Dev'
   tags:
     - deploy
     - clone
 
+- name: Link the local source code to our user home
+  file: src=/vagrant/ path="/home/{{deployment_name}}/{{mode}}" owner={{deployment_name}} group={{deployment_name}} state=link
+  when: mode == 'Dev'
+
 - name: Upgrade the Virtualenv.
-  pip: requirements="/home/{{deployment_name}}/{{ mode }}/requirements.txt" virtualenv=/home/{{deployment_name}}/{{ mode }}/venv/
+  pip: requirements="/home/{{deployment_name}}/{{ mode }}/requirements.txt" virtualenv=/home/{{deployment_name}}/.venv-{{mode}}/
   sudo_user: "{{deployment_name}}"
   register: venv
   tags:
@@ -21,7 +25,6 @@
   django_manage: command=syncdb app_path=/home/{{deployment_name}}/{{mode}}/ settings={{deployment_name}}.settings  virtualenv=/home/{{deployment_name}}/{{ mode }}/venv/
   sudo_user: "{{deployment_name}}"
   environment: env
-  when: mode != 'local'
   tags:
     - deploy
     - syncdb
@@ -30,10 +33,18 @@
   django_manage: command=migrate skip=true app_path=/home/{{ deployment_name }}/{{mode}}/ settings={{ deployment_name }}.settings  virtualenv=/home/{{deployment_name}}/{{ mode }}/venv/
   sudo_user: "{{deployment_name}}"
   environment: env
-  when: mode != 'local'
   tags:
     - deploy
     - migrate
+
+- name: Run bower collection
+  django_manage: command="bower install" app_path=/home/{{ deployment_name }}/{{mode}} settings={{ deployment_name}}.settings virtualenv=/home/{{deployment_name}}/{{mode}}/venv/
+  sudo_user: "{{deployment_name}}"
+  environment: env
+  tags:
+    - deploy
+    - bower
+  when: bower
 
 - name: Generate Django media.
   django_manage: command=collectstatic app_path=/home/{{ deployment_name }}/{{mode}} settings={{ deployment_name}}.settings virtualenv=/home/{{deployment_name}}/{{mode}}/venv/

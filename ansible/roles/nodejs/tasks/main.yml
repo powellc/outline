@@ -1,0 +1,17 @@
+---
+  - name: Install NPM (and Node.js etc.)
+    apt: pkg=npm state=installed update-cache=yes
+    tags:
+      - node
+
+  - name: Copy node executable to proper place
+    file: src=/usr/bin/nodejs dest=/usr/bin/node state=link
+    tags:
+      - node
+
+  - name: Install Bower
+    npm: name=bower global=yes
+    tags:
+      - node
+      - bower
+

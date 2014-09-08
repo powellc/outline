@@ -56,4 +56,4 @@
     file: state=directory path=/home/{{deployment_name}}/logs/
 
   - name: Copy bash profile to user.
-    copy: src=bash_profile  dest=/home/{{deployment_name}}/.bash_profile
+    template: src=bash_profile  dest=/home/{{deployment_name}}/.bash_profile

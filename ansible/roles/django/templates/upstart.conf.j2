@@ -10,4 +10,4 @@ env DJANGO_SECRET_KEY="{{secret_key}}"
 env DATABASE_URL="postgres://{{deployment_name}}:{{dbpass}}@localhost/{{deployment_name}}_{{mode}}"
 env DJANGO_CONFIGURATION="{{mode}}"
 
-exec /home/{{deployment_name}}/{{mode}}/venv/bin/gunicorn -c /etc/gunicorn_{{deployment_name}}_{{mode}}.py
+exec /home/{{deployment_name}}/{{mode}}/venv/bin/gunicorn {{deployment_name}}.wsgi:application -c /etc/gunicorn_{{deployment_name}}_{{mode}}.py
