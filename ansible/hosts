@@ -3,3 +3,6 @@ www.example.com
 
 [staging]
 staging.example.com
+
+[default]
+11.0.0.8
