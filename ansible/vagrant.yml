@@ -1,0 +1,14 @@
+---
+- hosts: default
+  gather_facts: True
+  user: vagrant
+  sudo: True
+  roles:
+    - role: common
+    - role: postgresql
+    - role: nodejs
+    - role: nginx
+    - role: django
+
+  tasks:
+    - include: roles/django/tasks/deploy.yml
