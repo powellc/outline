@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/powellc/outline.png?label=ready&title=Ready)](https://waffle.io/powellc/outline)
 Django Outline
 ==============
 
