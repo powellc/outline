@@ -12,7 +12,7 @@
 - name: Install PostgreSQL GIS tools
   apt: pkg={{item}} state=installed
   with_items:
-    - postgresql-9.1-postgis
+    - postgresql-9.3-postgis-2.1
     - postgis
     - libgdal1-dev
     - libgeos-dev
@@ -39,11 +39,6 @@
   postgresql_user: db={{deployment_name}}_{{mode}} user={{deployment_name}} password={{dbpass}} state=present priv=ALL role_attr_flags=SUPERUSER
   sudo_user: postgres
 
-- name: Change the db owner
-  postgresql_db: db={{deployment_name}}_{{mode}} owner={{deployment_name}}
-  sudo_user: postgres
-  when: not postgis
-
 
 # The following only runs if we set the postgis flag in the playbook
 
@@ -62,9 +57,9 @@
   action: command psql -d postgis_template -f $item
   sudo_user: postgres
   with_items:
-    - /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
-    - /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
-    - /usr/share/postgresql/9.1/contrib/postgis_comments.sql
+    - /usr/share/postgresql/9.3/contrib/postgis-1.5/postgis.sql
+    - /usr/share/postgresql/9.3/contrib/postgis-1.5/spatial_ref_sys.sql
+    - /usr/share/postgresql/9.3/contrib/postgis_comments.sql
   when: postgis and createdb_postgis_template.changed
 
 - name: Create the PostGIS database.
@@ -75,6 +70,11 @@
 - name: Copy db_dump script
   copy: src=db_dump.sh dest=/var/lib/postgresql/db_dump.sh
   sudo_user: postgres
-  when: mode != 'local'
+  when: mode != 'Dev'
   tags:
     - db-backup
+
+- name: Change the db owner
+  postgresql_db: db={{deployment_name}}_{{mode}} owner={{deployment_name}}
+  sudo_user: postgres
+
