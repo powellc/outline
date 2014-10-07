@@ -239,7 +239,7 @@ class Prod(Common):
 
     # If we're on production, connect to Sentry
     RAVEN_CONFIG = {
-        'dsn': DSN_VALUE,
+        'dsn': DSN_VALUE.setup('DSN_VALUE'),
     }
 
     INSTALLED_APPS = Common.INSTALLED_APPS + (
