@@ -28,7 +28,7 @@ class Common(Configuration):
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
     sys.path.insert(0, os.path.join(BASE_DIR, 'outline/apps'))
 
-    USE_SOUTH = True
+    USE_SOUTH = False
 
     # Quick-start development settings - unsuitable for production
     # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -60,7 +60,7 @@ class Common(Configuration):
         'allauth.socialaccount.providers.google',
         "django_extensions",
         'floppyforms',
-        'bootstrap3',
+        'rest_framework',
 
     )
 
