@@ -1,32 +1,161 @@
 {% extends "base.html" %}
 
+{% block banner %}
+<div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+        <h1 class="text_h center header cd-headline letters type">
+            <span>Django projects</span> 
+            <span class="cd-words-wrapper waiting">
+                <b class="is-visible">fast</b>
+                <b>efficient</b>
+                <b>productive</b>
+            </span>
+        </h1>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
+    <div class="row">
+        <div  class="col s12">
+            <h2 class="center header text_h2">Outline is a starting point for rapidly building out new Django projects using a host of best practices</h2>
+        </div>
+
+        <div  class="col s12 m4 l4">
+            <div class="center promo promo-example">
+                <i class="mdi-image-flash-on"></i>
+                <h5 class="promo-caption">Clone it</h5>
+                <p class="light center">Clone the respository</p>
+		<p class="light center"><input class="input-mini" type="text" value="git clone https://github.com/powellc/outline.git" readonly="readonly"/></p>
+            </div>
+        </div>
+        <div class="col s12 m4 l4">
+            <div class="center promo promo-example">
+                <i class="mdi-social-group"></i>
+                <h5 class="promo-caption">Rename it</h5>
+                <p class="light center">Rename the project to your own liking</p>
+		<p class="light center"><input type="text" value="make --name='transmogrifier' rename" readonly="readonly" /></p>
+            </div>
+        </div>
+        <div class="col s12 m4 l4">
+            <div class="center promo promo-example">
+                <i class="mdi-hardware-desktop-windows"></i>
+                <h5 class="promo-caption">Start your own (git) history</h5>
+                <p class="light center">Remove the old .git directory</p>
+		<p class="light center"><input type="text" value="rm -rf .git && git init" readonly="readonly" /></p>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
-      <div class="large-12 columns">
-        <h1>Welcome to Outline</h1>
-      </div>
+        <div  class="col s12">
+            <h2 class="center header text_h2">What's in the box?!</h2>
+        </div>
     </div>
-    
-    <div class="row">
-      <div class="large-12 columns">
-      	<div class="panel">
-	        <h3>A blurb can go here.</h3>
-            <p>To get going, you're going to need to login or <a href="/accounts/register/">create an account</a></p>
-	        <p>Once you've exhausted the fun in this document, you should check out:</p>
-	        <div class="row">
-	        	<div class="large-4 medium-4 columns">
-	    		<p><a href="http://foundation.zurb.com/docs">Foundation Documentation</a><br />Everything you need to know about using the framework.</p>
-	    	</div>
-	        	<div class="large-4 medium-4 columns">
-	        		<p><a href="http://github.com/zurb/foundation">Foundation on Github</a><br />Latest code, issue reports, feature requests and more.</p>
-	        	</div>
-	        	<div class="large-4 medium-4 columns">
-	        		<p><a href="http://twitter.com/foundationzurb">@foundationzurb</a><br />Ping us on Twitter if you have questions. If you build something with this we'd love to see it (and send you a totally boss sticker).</p>
-	        	</div>        
-					</div>
-      	</div>
-      </div>
-    </div>
+{% endblock %}
 
+{% block secondary_content %}
+<!--Work-->
+<div class="section scrollspy" id="work">
+    <div class="container">
+        <h2 class="header text_b">Work </h2>
+        <div class="row">
+            <div class="col s12 m4 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="img/project1.jpg">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Project Title <i class="mdi-navigation-more-vert right"></i></span>
+                        <p><a href="#">Project link</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Project Title <i class="mdi-navigation-close right"></i></span>
+                        <p>Here is some more information about this project that is only revealed once clicked on.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="img/project2.jpeg">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Project Title <i class="mdi-navigation-more-vert right"></i></span>
+                        <p><a href="#">Project link</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Project Title <i class="mdi-navigation-close right"></i></span>
+                        <p>Here is some more information about this project that is only revealed once clicked on.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="img/project3.png">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Project Title <i class="mdi-navigation-more-vert right"></i></span>
+                        <p><a href="#">Project link</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Project Title <i class="mdi-navigation-close right"></i></span>
+                        <p>Here is some more information about this project that is only revealed once clicked on.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="img/project4.jpg">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Project Title <i class="mdi-navigation-more-vert right"></i></span>
+                        <p><a href="#">Project link</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Project Title <i class="mdi-navigation-close right"></i></span>
+                        <p>Here is some more information about this project that is only revealed once clicked on.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="img/project5.png">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Project Title <i class="mdi-navigation-more-vert right"></i></span>
+                        <p><a href="#">Project link</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Project Title <i class="mdi-navigation-close right"></i></span>
+                        <p>Here is some more information about this project that is only revealed once clicked on.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col s12 m4 l4">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="img/project6.jpeg">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">Project Title <i class="mdi-navigation-more-vert right"></i></span>
+                        <p><a href="#">Project link</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">Project Title <i class="mdi-navigation-close right"></i></span>
+                        <p>Here is some more information about this project that is only revealed once clicked on.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Parallax-->
+<div class="parallax-container">
+    <div class="parallax"><img src="img/parallax1.png"></div>
+</div>
 {% endblock %}
