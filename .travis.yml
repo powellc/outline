@@ -5,6 +5,6 @@ python:
   - "2.7"
 
 install:
-  - "make install"
+  - "python setup.py install"
 
 script: "python manage.py test"
