@@ -1,26 +1,5 @@
-Django==1.8.3
--e git+https://github.com/jezdez/django-configurations.git@f35e7e57e070aecb4#egg=configurations
-dj-database-url==0.3.0
-pylibmc==1.3.0
-Pillow==2.0.0
-django-cache-url==0.8.0
-werkzeug==0.9.4
-gunicorn==0.17.4
-easy-thumbnails==1.2
-django-debug-toolbar==1.3.2
-django-extensions==1.5.5
-django-braces==1.4.0
-django-allauth==0.22.0
-django-bootstrap3==6.1.0
-django-floppyforms==1.5.2
-django-custom-user==0.5
-south==0.8.2
 
-boto==2.9.5
-django-storages==1.1.8
+--index-url http://pypi.onec.me/pypi/
+--index-url https://pypi.python.org/simple/
 
-#psycopg2==2.5
-
-djangorestframework==3.1.3
-markdown==2.6.2
-django-filter==0.10.0
+-e .
