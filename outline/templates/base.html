@@ -37,10 +37,20 @@
     {% block navigation %}
     <nav id="nav_f" class="default_color" role="navigation">
         <div class="container">
-            <div class="nav-wrapper"><a id="logo-container" href="#top" class="brand-logo">Django Outline</a>
+            <div class="nav-wrapper"><a id="logo-container" href="/" class="brand-logo">Django Outline</a>
             <ul id="nav-mobile" class="right side-nav">
-                <li><a href="#intro">Get Started</a></li>
-                <li><a href="#work">Docs</a></li>
+                <li><a href="/#intro">Get Started</a></li>
+                <li><a href="/#work">Docs</a></li>
+		{% if not request.user.is_authenticated %}
+                <li><a href="{% url 'account_signup' %}">Signup</a></li>
+                <li><a href="{% url 'account_login' %}">Login</a></li>
+		{% else %}
+		<li>
+                <form method="post" id="logout-form" action="{% url 'account_logout' %}">{% csrf_token %}
+                <a href="#" onclick="$('#logout-form').submit();">Logout</a>
+		</form>
+		</li>
+		{% endif %}
                 <li><a href="https://github.com/powellc/outline" target="_blank"><i class="fa fa-github"></i> Github</a></li>
             </ul><a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
             </div>

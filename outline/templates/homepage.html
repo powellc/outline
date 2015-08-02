@@ -6,7 +6,11 @@
         <h1 class="text_h center header cd-headline letters type">
             <span>Django projects</span> 
             <span class="cd-words-wrapper waiting">
+		{% if request.user.is_authenticated %}
+                <b class="small is-visible">{{request.user}}</b>
+		{% else %}
                 <b class="is-visible">fast</b>
+		{% endif %}
                 <b>efficient</b>
                 <b>productive</b>
             </span>
