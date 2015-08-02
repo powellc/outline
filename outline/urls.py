@@ -7,7 +7,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
-    (r'^accounts/', include('allauth.urls')),
+    url(r'^accounts/', include('allauth.urls')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url("^$", 
         TemplateView.as_view(template_name='homepage.html'), 
         name="homepage")

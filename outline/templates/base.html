@@ -1,113 +1,138 @@
 {% load static %}
-{% load foundation_tags %}
-<!doctype html>
-<html class="no-js" lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% block meta %}{% endblock meta %}
-    {% block base_title %}
-    <title>{% block title %}Foundation 5.0.3{% endblock title %}</title>
-    {% endblock base_title %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="theme-color" content="#2196F3">
+    <title>{% block page_title %}django outline 2.0{% endblock %}</title>
 
-    {# Base Foundation CSS #}
-    {% block foundation_css %}
-    {% foundation_css "normalize" %}
-    {% foundation_css "foundation.min" %}
-    {% endblock foundation_css %}  
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <!-- CSS  -->
+    <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" >
+    <link href="{% static 'css/font-awesome.min.css' %}" type="text/css" rel="stylesheet" >
 
-    
     {# Custom CSS #}
-    {% block css %}{% endblock css %}
+    {% block css %}{% endblock %}
 
-    {# Override if you need another version of modernizr #}
-    {% block foundation_modernizer %}
-    {% foundation_vendor "modernizr" %}
-    {% endblock foundation_modernizer %}
+    <script src="{% static 'js/modernizr.js' %}"></script> <!-- Modernizr -->
 
     {# Custom head JS #}
-    {% block head_js %}{% endblock head_js %}
+    {% block head_js %}{% endblock %}
+
 </head>
-<body {% block body_attr %}{% endblock body_attr %}>
-    {% block base_header %}
-    <nav class="top-bar" data-topbar>
-      <ul class="title-area">
-        <!-- Title Area -->
-        <li class="name">
-          <h1>
-            <a href="#">
-             Outline
-            </a>
-          </h1>
-        </li>
-        <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
-      </ul>
-   
-      <section class="top-bar-section">
-        <!-- Right Nav Section -->
-        <ul class="right">
-        {% if request.user.is_authenticated %}
-          <li class="divider"></li>
-          <li class="">
-          <a href="{% url 'teammate-home' %}"><i class="fa fa-home"></i>&nbsp;Home</a>
-          </li>
-          <li class="divider"></li>
-          <li class="has-dropdown"><a href="#">Manage</a>
-            <ul class="dropdown">
-                <li><a href="{% url 'week-create' %}">Add week</a></li>
-                <li><a href="{% url 'week-list' %}">View plans</a></li>
-              <li class="divider"></li>
-              <li><a href="{% url 'account_logout' %}"><i class="fa fa-logout"></i>&nbsp;Logout</a></li>
-            </ul>
-          </li>
-          <li class="divider"></li>
-          <li class="has-dropdown">
-            <a href="#"><i class="fa fa-gears"></i>&nbsp;{{request.user.name}}</a>
-            <ul class="dropdown">
-              <li><a href="">Edit profile</a></li>
-              <li><a href="">My week</a></li>
-              <li class="divider"></li>
-              <li><a href="{% url 'account_logout' %}"><i class="fa fa-logout"></i>&nbsp;Logout</a></li>
-            </ul>
-          </li>
-        {% else %}
-        <li class=""><a href="{% url 'account_signup' %}">Sign up</a></li>
-        <li class=""><a href="{% url 'account_login' %}">Log in</a></li>
-        {% endif %}
-        </ul>
-      </section>
+<body id="top" class="scrollspy" {% block body_attr %}{% endblock body_attr %}>
+
+<!-- Pre Loader -->
+<div id="loader-wrapper">
+    <div id="loader"></div>
+ 
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
+ 
+</div>
+
+<!--Navigation-->
+ <div class="navbar-fixed">
+    {% block navigation %}
+    <nav id="nav_f" class="default_color" role="navigation">
+        <div class="container">
+            <div class="nav-wrapper"><a id="logo-container" href="/" class="brand-logo">Django Outline</a>
+            <ul id="nav-mobile" class="right side-nav">
+                <li><a href="/#intro">Get Started</a></li>
+                <li><a href="/#work">Docs</a></li>
+		{% if not request.user.is_authenticated %}
+                <li><a href="{% url 'account_signup' %}">Signup</a></li>
+                <li><a href="{% url 'account_login' %}">Login</a></li>
+		{% else %}
+		<li>
+                <form method="post" id="logout-form" action="{% url 'account_logout' %}">{% csrf_token %}
+                <a href="#" onclick="$('#logout-form').submit();">Logout</a>
+		</form>
+		</li>
+		{% endif %}
+                <li><a href="https://github.com/powellc/outline" target="_blank"><i class="fa fa-github"></i> Github</a></li>
+            </ul><a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+            </div>
+        </div>
     </nav>
-
     {% endblock %}
+</div>
 
-    {# Main content goes here #}
-    {% block base_body %}
-    <div class="row">
-      <div class="large-12 columns">
-      {% block content %}{% endblock %}
-      </div>
+<!--Hero-->
+{% block banner %}
+{% endblock %}
+
+<!--Intro and service-->
+<div id="intro" class="section scrollspy">
+    <div class="container">
+    {% block content %}
+    {% endblock %}
     </div>
-    {% endblock %}
+</div>
 
-    {# Override if you need another version of jQuery #}
-    {% block foundation_jquery %}
-    {% foundation_vendor "jquery" %}
-    {% endblock foundation_jquery %}
+{% block secondary_content %}
+{% endblock %}
 
-    {# Foundation JS #}
-    {% block foundation_js %}
-    {% foundation_js %}
-    {% endblock foundation_js %}
+<!--Footer-->
+<footer id="contact" class="page-footer default_color scrollspy">
+    <div class="container">  
+        <div class="row">
+            <div class="col l6 s12">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <i class="mdi-action-account-circle prefix white-text"></i>
+                            <input id="icon_prefix" type="text" class="validate white-text">
+                            <label for="icon_prefix" class="white-text">Colin Powell</label>
+                        </div>
+                        <div class="input-field col s6">
+                        </div>
+                        <div class="input-field col s12">
+                            <i class="mdi-editor-mode-edit prefix white-text"></i>
+                            <textarea id="icon_prefix2" class="materialize-textarea white-text"></textarea>
+                            <label for="icon_prefix2" class="white-text">Message</label>
+                        </div>
+                        <div class="col offset-s7 s5">
+                            <button class="btn waves-effect waves-light red darken-1" type="submit" name="action">Submit
+                                <i class="mdi-content-send right white-text"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">powellc</h5>
+                <ul>
+                    <li><a class="white-text" href="http://www.onec.me/blog">Blog</a></li>
+                </ul>
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Social</h5>
+                <ul>
+                    <li>
+                        <a class="white-text" href="https://github.com/powellc/outline">
+                            <i class="small fa fa-github-square white-text"></i> Github
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright default_color">
+        <div class="container">
+            Made by <a class="white-text" href="http://github.com/powellc">powellc</a>. Thanks to <a class="white-text" href="http://materializecss.com/">materializecss</a> and <a class="white-text" href="http://joashpereira.com">joashpereira.com</a>
+        </div>
+    </div>
+</footer>
 
-    {# Custom JS #}
+
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="{% static 'js/materialize.js' %}"></script>
+    <script src="{% static 'js/init.js' %}"></script>
+ 
     {% block body_js %}{% endblock body_js %}
 
-    {# Init Foundation #}
-    {% block foundation_js_init %}
-    <script>
-        $(document).foundation();
-    </script>
-    {% endblock foundation_js_init %}
-</body>
+    </body>
 </html>

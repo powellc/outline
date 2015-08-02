@@ -28,7 +28,7 @@ class Common(Configuration):
     BASE_DIR = os.path.dirname(os.path.dirname(__file__))
     sys.path.insert(0, os.path.join(BASE_DIR, 'outline/apps'))
 
-    USE_SOUTH = True
+    USE_SOUTH = False
 
     # Quick-start development settings - unsuitable for production
     # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -38,13 +38,10 @@ class Common(Configuration):
 
     TEMPLATE_DEBUG = False
 
-    ALLOWED_HOSTS = []
-
     # Application definition
 
     INSTALLED_APPS = (
         "django.contrib.admin",
-        "django.contrib.comments",
         "django.contrib.auth",
         "django.contrib.contenttypes",
         "django.contrib.redirects",
@@ -60,16 +57,15 @@ class Common(Configuration):
         'allauth.socialaccount.providers.github',
         'allauth.socialaccount.providers.google',
         "django_extensions",
-        'foundation',
         'floppyforms',
+        'rest_framework',
 
     )
 
     TEMPLATE_CONTEXT_PROCESSORS = Configuration.TEMPLATE_CONTEXT_PROCESSORS + \
         ("django.core.context_processors.request",
          "django.core.context_processors.tz",
-         "allauth.account.context_processors.account",
-         "allauth.socialaccount.context_processors.socialaccount",)
+        )
 
     MIDDLEWARE_CLASSES = (
         "django.contrib.sessions.middleware.SessionMiddleware",
@@ -164,7 +160,6 @@ class Common(Configuration):
     LOGIN_REDIRECT_URL = '/'
     LOGOUT_URL = '/accounts/logout/'
 
-    DEBUG_TOOLBAR_PATCH_SETTINGS = False 
     # A sample logging configuration. The only tangible logging
     # performed by this configuration is to send an email to
     # the site admins on every HTTP 500 error when DEBUG=False.
@@ -204,9 +199,6 @@ class Dev(Common):
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
     INSTALLED_APPS = Common.INSTALLED_APPS + ('debug_toolbar',)
-
-    MIDDLEWARE_CLASSES = Common.MIDDLEWARE_CLASSES + (
-        'debug_toolbar.middleware.DebugToolbarMiddleware',)
 
 
 class Stage(Common):
