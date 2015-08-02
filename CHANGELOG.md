@@ -1,6 +1,18 @@
 Changelog
 =========
 
+v2.0.1
+------
+
+  * Fix Travis build testing
+
+v2.0.0
+------
+
+  * Upgrade to Django 1.8
+  * Add django rest framework to default kit
+  * Change out the base templates to use materialize and no framework by default
+
 v1.0.2
 ------
 
