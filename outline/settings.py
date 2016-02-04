@@ -36,8 +36,6 @@ class Common(Configuration):
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = False
 
-    TEMPLATE_DEBUG = False
-
     # Application definition
 
     INSTALLED_APPS = (
@@ -62,10 +60,27 @@ class Common(Configuration):
 
     )
 
-    TEMPLATE_CONTEXT_PROCESSORS = Configuration.TEMPLATE_CONTEXT_PROCESSORS + \
-        ("django.core.context_processors.request",
-         "django.core.context_processors.tz",
-        )
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [ os.path.join(BASE_DIR, "outline/templates") ],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+                    # list if you haven't customized them:
+                    'django.contrib.auth.context_processors.auth',
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.i18n',
+                    'django.template.context_processors.media',
+                    'django.template.context_processors.static',
+                    'django.template.context_processors.tz',
+                    'django.core.context_processors.request',
+                    'django.contrib.messages.context_processors.messages',
+                ],
+            },
+        },
+    ]
 
     MIDDLEWARE_CLASSES = (
         "django.contrib.sessions.middleware.SessionMiddleware",
@@ -130,8 +145,6 @@ class Common(Configuration):
 
     MEDIA_ROOT = os.path.join(BASE_DIR, 'public/media')
 
-    TEMPLATE_DIRS = (os.path.join(BASE_DIR, "outline/templates"),)
-
     STATIC_URL = '/static/'
 
     STATIC_ROOT = os.path.join(BASE_DIR, 'public/static')
@@ -188,7 +201,7 @@ class Dev(Common):
     """
     The in-development settings and the default configuration.
     """
-    DEBUG = TEMPLATE_DEBUG = True
+    DEBUG = True
 
     DATABASES = values.DatabaseURLValue('sqlite:///{0}'.format(
         os.path.join(Common.BASE_DIR, 'db.sqlite3'),
@@ -202,7 +215,7 @@ class Dev(Common):
 
 
 class Stage(Common):
-    DEBUG = TEMPLATE_DEBUG = True
+    DEBUG = True
 
     SECRET_KEY = values.SecretValue()
 
@@ -217,7 +230,7 @@ class Prod(Common):
     """
     The in-production settings.
     """
-    DEBUG = TEMPLATE_DEBUG = False
+    DEBUG = False
 
     SECRET_KEY = values.SecretValue()
 
