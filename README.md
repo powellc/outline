@@ -43,7 +43,7 @@ Powered by the ubiquitous Makefile ... this should be pretty easy:
 3. open your browser to: http://127.0.0.1:45000
 
 
-Librarys, librarys, librarys!
+Libraries, libraries, libraries!
 -----------------------------
 
 Of course, we could provide a vagrant file and a provisoner and all 
