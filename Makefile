@@ -1,7 +1,7 @@
 install:
-	virtualenv venv
+	virtualenv -p /usr/bin/python3 venv
 	venv/bin/python setup.py install
-	venv/bin/python manage.py syncdb --noinput
+	venv/bin/python manage.py migrate --noinput
 
 
 deps:
@@ -29,3 +29,21 @@ rename:
 	mv outline/manage_outline.py outline/manage_$(name).py
 	mv outline $(name)
 	echo "Great, you're all set! Well, you'll probably want to adjust the setup file by hand a bit."
+
+tag-release:
+	sed -i "/__version__/c\__version__ = '$(v)'" outline/__init__.py
+	git add outline/__init__.py && git commit -m "Automated version bump to $(v)" && git push
+	git tag -a release/$(v) -m "Automated release of $(v) via Makefile" && git push origin --tags
+
+package:
+	rm -rf build
+	python setup.py clean
+	python setup.py build sdist bdist_wheel
+
+distribute:
+	twine upload -s dist/outline-$(v)*
+
+release:
+	$(MAKE) tag-release
+	$(MAKE) package
+	$(MAKE) distribute

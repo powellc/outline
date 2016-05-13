@@ -1,4 +1,27 @@
 include README.md
+include *.md
+include *.py
+include *.txt
+include *.html
+include tox.ini
+include *.env
+include Dockerfile
+include LICENSE
+include Makefile
+include Procfile
+include Vagrantfile
 recursive-include outline/static *
 recursive-include outline/templates *
 recursive-include outline/apps *
+recursive-include docs *.bat
+recursive-include docs *.py
+recursive-include docs *.rst
+recursive-include docs Makefile
+graft outline
+recursive-exclude venv *
+global-exclude __pycache__
+global-exclude *.py[co]
+recursive-include ansible *
+recursive-include public *
+recursive-exculde etc *.conf
+
