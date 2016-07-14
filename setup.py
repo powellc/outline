@@ -5,7 +5,7 @@ import sys
 version = __import__('outline').__version__
 
 install_requires = [
-    'Django>=1.9.6',
+    'Django>=1.9,<1.10',
     'django_configurations>=1.0',
     'dj-database-url>=0.3.0',
     'pylibmc>=1.5.0',
@@ -31,7 +31,6 @@ install_requires = [
     'markdown>=2.6.1',
     'django-filter>=0.9.2',
     'django-templated-email>=0.4.9',
-    'psycopg2>=2.5'
 ]
 
 # App specific libraries
