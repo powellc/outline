@@ -1,6 +1,26 @@
 Changelog
 =========
 
+3.1.0
+-----
+
+  * Adding updated dockerfile and env files
+  * Remove patterns include from urls for django 1.9
+
+
+3.0.1
+-----
+
+  * Clean up deployment and requirements
+  * Merge pull request #10 from ckinsey/master
+  * Update README.md
+  * Update README.md
+  * Much needed pluralization love.
+  * Upgrade to python3 and django 1.9
+  * Updating extensions
+
+
+
 v2.0.1
 ------
 
