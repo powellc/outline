@@ -64,3 +64,4 @@ docs/_build/
 venv
 *.sqlite3
 .vagrant
+.env
