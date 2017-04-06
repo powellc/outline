@@ -5,7 +5,7 @@ import sys
 version = __import__('outline').__version__
 
 install_requires = [
-    'Django>=1.9,<1.10',
+    'Django>=1.10,<1.11',
     'django_configurations>=1.0',
     'dj-database-url>=0.3.0',
     'pylibmc>=1.5.0',
@@ -14,7 +14,7 @@ install_requires = [
     'werkzeug>=0.9.4',
     'gunicorn>=0.19.4',
     'easy-thumbnails>=1.2',
-    'django-debug-toolbar>=1.4',
+    'django-debug-toolbar>=1.7',
     'django-extensions>=1.6.1',
     'django-braces>=1.4.0',
     'django-localflavor>=1.1',

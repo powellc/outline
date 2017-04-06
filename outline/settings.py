@@ -74,22 +74,24 @@ class Common(Configuration):
                     'django.template.context_processors.i18n',
                     'django.template.context_processors.media',
                     'django.template.context_processors.static',
+	            'django.template.context_processors.request',
                     'django.template.context_processors.tz',
-                    'django.core.context_processors.request',
                     'django.contrib.messages.context_processors.messages',
                 ],
             },
         },
     ]
 
-    MIDDLEWARE_CLASSES = (
-        "django.contrib.sessions.middleware.SessionMiddleware",
-        "django.contrib.auth.middleware.AuthenticationMiddleware",
-        "django.middleware.common.CommonMiddleware",
-        "django.middleware.csrf.CsrfViewMiddleware",
-        "django.contrib.messages.middleware.MessageMiddleware",
+    MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+	'debug_toolbar.middleware.DebugToolbarMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    )
+    ]
 
     STATICFILES_FINDERS = (
         "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -210,8 +212,6 @@ class Dev(Common):
     SECRET_KEY = 'notasecretatall'
 
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-    INSTALLED_APPS = Common.INSTALLED_APPS + ('debug_toolbar',)
 
 
 class Stage(Common):
