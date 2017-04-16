@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/powellc/outline.png?label=ready&title=Ready)](https://waffle.io/powellc/outline)
 Django Outline
 ==============
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/powellc/outline?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
